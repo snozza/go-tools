@@ -33,9 +33,15 @@ func IsNotFound(err error) bool {
 	return IsStatus(err, 404)
 }
 
-// Params returns the parameter by name.
+// Param returns the parameter by name.
 func Param(r *http.Request, name string) string {
 	return r.URL.Query().Get(name)
 }
 
-func 
+// ParamDefault returns the parameter by name, else value.
+func ParamDefault(r *http.Request, name string, value string) string {
+	if s := Param(r, name); s != "" {
+		return s
+	}
+	return value
+}
