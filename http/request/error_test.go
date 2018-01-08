@@ -34,9 +34,15 @@ func TestIsServer(t *testing.T) {
 	assert.False(t, IsServer(Error(400)))
 }
 
-func TestParams(t *testing.T) {
-	URL := &url.URL{RawQuery: "hello=world&bye=planet"}
-	req := &http.Request{URL: URL}
+func TestParam(t *testing.T) {
+	u := &url.URL{RawQuery: "hello=world&bye=planet"}
+	req := &http.Request{URL: u}
 	assert.Equal(t, Params(req, "hello"), "world")
 	assert.Equal(t, Params(req, "bye"), "planet")
+}
+
+func TestParamDefault(t *testing.T) {
+	URL := &url.URL()
+	req := http.Request{URL: u}
+	assert.Equal(t, Params(req, "hello", "oops"), "oops")
 }
