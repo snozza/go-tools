@@ -1,6 +1,8 @@
 package request
 
 import (
+	"net/http"
+	"net/url"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -30,4 +32,11 @@ func TestIsClient(t *testing.T) {
 func TestIsServer(t *testing.T) {
 	assert.True(t, IsServer(Error(500)))
 	assert.False(t, IsServer(Error(400)))
+}
+
+func TestParams(t *testing.T) {
+	URL := &url.URL{RawQuery: "hello=world&bye=planet"}
+	req := &http.Request{URL: URL}
+	assert.Equal(t, Params(req, "hello"), "world")
+	assert.Equal(t, Params(req, "bye"), "planet")
 }

@@ -32,3 +32,8 @@ func IsServer(err error) bool {
 func IsNotFound(err error) bool {
 	return IsStatus(err, 404)
 }
+
+// Params returns the parameter by name.
+func Params(r *http.Request, name string) string {
+	return r.URL.Query().Get(name)
+}
